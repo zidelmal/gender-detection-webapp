@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+	<header>
+		<div class="container">
+		<div id="brandname">
+			ML App
+		</div>
+		<h2>Gender Detector For Names</h2>
+		
+	</div>
+	</header>
+	<p style="color:blue;font-size:20;text-align: center;"><b>Results for Comment</b></p>
+	<div class="results">
+
+
+	{% for i, row in meta.iterrows() %}	
+		{% if row['gender'] == 1%}
+		<h2 style="color:Blue;">{{ row['name'] }} is a Male</h2>
+		{% elif row['gender'] == 0%}
+		<h2 style="color:red;">{{ row['name'] }} is a Female</h2>
+		{% endif %}
+	{% endfor %}
+
+	</div>
+
+</body>
+</html>
