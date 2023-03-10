@@ -35,6 +35,7 @@ def predict():
 		X = X.reshape(X.shape[0], X.shape[1]*X.shape[2])
 		# Get my prediction
 		data['gender'] = clf.predict(X)
+		data['name'] = data['name'].str.capitalize()
 	return render_template('result.html',meta = data)
 
 

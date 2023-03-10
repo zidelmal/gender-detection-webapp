@@ -3,31 +3,48 @@
 <head>
 	<title></title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<style>
+    /* html,
+    body {
+      height: 100%;
+    } */
+	table, th, td {
+		  border:1px solid black;
+		}
+    body {
+      background-color: #f5f5f5;
+    }
+	.center {
+	margin-left: auto;
+	margin-right: auto;
+	}
+  </style>
 </head>
 <body>
-
 	<header>
-		<div class="container">
-		<div id="brandname">
-			ML App
-		</div>
-		<h2>Gender Detector For Names</h2>
-		
-	</div>
+	
 	</header>
-	<p style="color:blue;font-size:20;text-align: center;"><b>Results for Comment</b></p>
-	<div class="results">
-
-
-	{% for i, row in meta.iterrows() %}	
-		{% if row['gender'] == 1%}
-		<h2 style="color:Blue;">{{ row['name'] }} is a Male</h2>
-		{% elif row['gender'] == 0%}
-		<h2 style="color:red;">{{ row['name'] }} is a Female</h2>
-		{% endif %}
-	{% endfor %}
-
-	</div>
-
+	<h1 style="font-size:100;text-align: center;"><b>Results</b></h1>
+	</br>	
+	<table style="width:50%;text-align: center;" class="center">
+		<tr>
+			<th>N°</th>
+		  	<th>Name</th>
+		  	<th>Gender</th>
+		</tr>
+		{% for index, row in meta.iterrows() %}	
+			<tr>
+				{% if row['gender'] == 1 %}
+					<td style="text-align: center;">{{ index+1 }}</td>
+					<td style="text-align: center;">{{ row['name'] }}</td>
+					<td style="text-align: center;color: blue;">Man</td>
+				{% elif row['gender'] == 0%}
+					<td style="text-align: center;">{{ index+1 }}</td>
+					<td style="text-align: center;">{{ row['name'] }}</td>
+					<td style="text-align: center;color: violet;">Woman</td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</table>
 </body>
 </html>
