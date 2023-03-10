@@ -119,9 +119,9 @@ class Preprocess:
         ]
 
         # Step 3: Encode names to matrix of 0 and 1
-        for num in range(len(names_df)):
-            for i, j in zip(range(len(names_df['alpha_name'][num])), names_df['alpha_name'][num]):
-                names_df['encoded_name'][num][i,j]=1
+        for index, row in names_df.iterrows():
+            for i, j in zip(range(len(row['alpha_name'])), row['alpha_name']):
+                row['encoded_name'][i,j]=1
 
         return names_df.drop('alpha_name', axis=1)
     
@@ -138,11 +138,11 @@ class Preprocess:
         names_df['name'] = names_df.name.apply(lambda x: self.clean_text(x))
         names_df=names_df.dropna(subset='name').reset_index(drop=True)
         #Step 3 : drop short names
-        index=[]
-        for i in range(len(names_df)):
-            if len(names_df.name[i])<3:
-                index.append(i)
-        names_df=names_df.drop(index)
+        indexes=[]
+        for index, row in names_df.iterrows():
+            if len(row['name'])<3:
+                indexes.append(index)
+        names_df=names_df.drop(indexes)
         names_df=names_df.reset_index(drop=True)
 
         #Step 1: standardize names

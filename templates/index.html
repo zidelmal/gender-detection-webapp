@@ -1,35 +1,83 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="fr">
 <head>
-	<title>Home</title>
-	<!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gender Detector</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+    
+    body {
+      display: flex;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #f5f5f5;
+    }
+    
+    .form-signin {
+      max-width: 330px;
+      padding: 15px;
+    }
+    
+    .form-signin .form-floating:focus-within {
+      z-index: 2;
+    }
+    
+    .form-signin input[type="email"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    
+    .form-signin input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  </style>
+  <!-- Custom styles for this template -->
 </head>
-<body>
 
-	<header>
-		<div class="container">
-		<div id="brandname">
-			Machine Learning App with Flask
-		</div>
-		<h2>Gender Detector For Names</h2>
-		
-	</div>
-	</header>
+<body class="text-center">
+  <!-- header -->
+  <main class="form-signin w-100 m-auto">
+      <form action="{{ url_for('predict')}}" method="POST">
+          <img class="mb-4" src="{{ url_for('static', filename='media/logo/gn.jpg') }}" alt="Logo yassir" width="150" height="87">
+          <h1 class="h3 mb-3 fw-normal"></h1>
 
-	<div class="ml-container">
+          <div class="form-floating">
+          <div class="mb-3">
+              <h1 class="h4 mb-2 fw-normal">Enter your name here</h1>    
+          <textarea id='name_input' class="col-mb-12 form-control" name="name" rows="6" cols="80" placeholder="Jonhathan, Liza, ..." required autofocus></textarea>
+          </div>
+          <div class="text-center mt-3">
+            <input id='btn' class="btn btn-lg btn-primary" type="submit" value="Detect">
+          </div>
+          <p class="mt-5 mb-3 text-muted">&copy; Gender Detector 2022</p>
+      </form>
 
-		<form action="{{ url_for('predict')}}" method="POST">
-		<p>Enter Your Name Here (for multi prediction, put a comma ',' between names)</p>
-		<!-- <input type="text" name="comment"/> -->
-		<textarea name="name" rows="4" cols="50"></textarea>
-		<br/>
-
-		<input type="submit" class="btn-info" value="predict">
-		
-	</form>
-		
-	</div>
-
+  </main>
 </body>
+<script>
+// Get the input field
+  var input = document.getElementById("name_input");
+  
+  // Execute a function when the user presses a key on the keyboard
+  input.addEventListener("keypress", function(event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.getElementById("btn").click();
+    }
+  });
+  </script>
 </html>
