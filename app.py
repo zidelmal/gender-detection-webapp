@@ -3,18 +3,24 @@ import joblib
 import numpy as np
 import pandas as pd
 from preprocess.preprocess import Preprocess
-from flask import Flask, render_template, url_for, request
+from flask import (Flask, 
+                   render_template, 
+                   request, 
+                   Response,
+                   send_file)
+
+# Init some functions
 
 # Init the flask server
 app = Flask(__name__)
 
+# Put some routes
 @app.route('/')
 def index():
 	return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-
 	# Initialize the pre-process
 	process = Preprocess()
 
@@ -34,10 +40,19 @@ def predict():
 		X = np.asarray(data['encoded_name'].values.tolist())
 		X = X.reshape(X.shape[0], X.shape[1]*X.shape[2])
 		# Get my prediction
-		data['gender'] = clf.predict(X)
+		result = clf.predict(X)
+		data['gender'] =  [1 if logit > 0.5 else 0 for logit in result]
 		data['name'] = data['name'].str.capitalize()
+		data[['name', 'gender']].to_csv('static/media/data/prediction.csv', index=False)
 	return render_template('result.html',meta = data)
 
+@app.route("/getPrediction")
+def getPlotCSV():
+    return send_file(
+        'static/media/data/prediction.csv',
+        mimetype="text/csv",
+        download_name='prediction.csv',
+        as_attachment=True)
 
 if __name__ == '__main__':
 	app.run(debug=True)

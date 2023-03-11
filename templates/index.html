@@ -12,72 +12,109 @@
     body {
       height: 100%;
     }
-    
     body {
-      display: flex;
+      display: flow-root;
       align-items: center;
       padding-top: 40px;
       padding-bottom: 40px;
       background-color: #f5f5f5;
     }
-    
     .form-signin {
-      max-width: 330px;
+      max-width: 630px;
       padding: 15px;
     }
-    
     .form-signin .form-floating:focus-within {
       z-index: 2;
-    }
-    
-    .form-signin input[type="email"] {
-      margin-bottom: -1px;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    
-    .form-signin input[type="password"] {
-      margin-bottom: 10px;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
     }
   </style>
   <!-- Custom styles for this template -->
 </head>
 
-<body class="text-center">
+<body>
   <!-- header -->
-  <main class="form-signin w-100 m-auto">
-      <form action="{{ url_for('predict')}}" method="POST">
-          <img class="mb-4" src="{{ url_for('static', filename='media/logo/gn.jpg') }}" alt="Logo yassir" width="150" height="87">
-          <h1 class="h3 mb-3 fw-normal"></h1>
-
-          <div class="form-floating">
-          <div class="mb-3">
-              <h1 class="h4 mb-2 fw-normal">Enter your name here</h1>    
-          <textarea id='name_input' class="col-mb-12 form-control" name="name" rows="6" cols="80" placeholder="Jonhathan, Liza, ..." required autofocus></textarea>
-          </div>
-          <div class="text-center mt-3">
-            <input id='btn' class="btn btn-lg btn-primary" type="submit" value="Detect">
-          </div>
-          <p class="mt-5 mb-3 text-muted">&copy; Gender Detector 2022</p>
-      </form>
-
-  </main>
+  <div id="react-entry-point">
+    <table style="margin-left: auto;margin-right: auto;">
+      <tr>
+        <center><img class="mb-4" src="{{ url_for('static', filename='media/logo/gn.jpg') }}" alt="Logo yassir" width="150" height="87"></center>
+        <div style="font-size: 20px;">
+          <center>Check if your names are Man's names or Woman's names</center>
+        </div>
+        <main class="form-signin w-100 m-auto">
+            <form action="{{ url_for('predict')}}" method="POST">
+                <div class="mb-3"> 
+                  <textarea id='names' class="form-control" name="name" rows="4" cols="40" placeholder="Enter names separated by comma." style="width: 700;" required autofocus></textarea>
+                </div>
+                <div class="text-center mt-3">
+                  <input id='btn' class="btn btn-lg btn-primary" type="submit" value="Detect">
+                </div>
+            </form>
+        </main>
+        </br>
+        <div style="font-size: 20px;">
+          <center>
+            <b>About Gender Detector</b>
+          </center>
+        </div>
+        </br>
+        <div style="text-align: justify;">
+          <ol>
+            <li>
+              <strong>How does it work?</strong>
+              <ul>
+                <li>
+                  "Gender Detector" uses a Machine Learning algorithm called "ExtraTreeClassifier" to read a name and output whether the name is a boy's name or a girl's name.
+                </li>
+                <li>
+                  The algorithm has learnt how to make these output predictions by learning from over 120,000 first names from all over the world(even names writen in arabic).
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Does it work for all the names?</strong>
+              <ul>
+                <li>
+                  The algorithm was developed by feeding it with names writen in both latin and arabic alphabets. So it can detect all names written with these alphabets.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Does the website store any information?</strong>
+              <ul>
+                <li>
+                  No. The algorithm runs on the names your provide and plots out the output predictions. The names are lost after that and the app does not store any information.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Who am i?</strong>
+              <ul>
+                <li>
+                I'm the Best Data Scientist according to <a href="https://www.linkedin.com/in/lydia-madouni/" target="_blank">Lydia Madouni</a>.
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </tr>
+    </table>
+  </div>
 </body>
-<script>
-// Get the input field
-  var input = document.getElementById("name_input");
-  
-  // Execute a function when the user presses a key on the keyboard
-  input.addEventListener("keypress", function(event) {
-    // If the user presses the "Enter" key on the keyboard
-    if (event.key === "Enter") {
-      // Cancel the default action, if needed
-      event.preventDefault();
-      // Trigger the button element with a click
-      document.getElementById("btn").click();
-    }
-  });
+<footer>
+  <!-- <center><p class="mt-5 mb-3 text-muted">&copy; Gender Detector 2022</p></center> -->
+  <script>
+  // Get the input field
+    var input = document.getElementById("names");
+    
+    // Execute a function when the user presses a key on the keyboard
+    input.addEventListener("keypress", function(event) {
+      // If the user presses the "Enter" key on the keyboard
+      if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("btn").click();
+      }
+    });
   </script>
+</footer>
 </html>
