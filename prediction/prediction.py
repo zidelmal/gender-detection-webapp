@@ -1,12 +1,18 @@
 import re
+import joblib
 import unicodedata
 import numpy as np
+import pandas as pd
 from emot.emo_unicode import UNICODE_EMOJI
 from emot.emo_unicode import EMOTICONS_EMO
 from camel_tools.utils.charmap import CharMapper
 
 
-class Preprocess:
+class Prediction:
+
+    def __init__(self, request):
+        self.clf = joblib.load('ETC.pkl')
+        self.request = request
 
     def remove_emojis(self, data):
         emoj = re.compile("["
@@ -60,8 +66,9 @@ class Preprocess:
         :returns: The processed String.
         :rtype: String.
         """
-        text = self.strip_accents(text.lower())
-        text = re.sub('[^0-9a-zA-Z_-]', ' ', text)
+        if not re.search('[ء-ي]', text):
+            text = self.strip_accents(text.lower())
+            text = re.sub('[^0-9a-zA-Z_-]', ' ', text)
         return text
 
     def clean_text(self, text):
@@ -77,16 +84,16 @@ class Preprocess:
         respellings = {
                     '|': 'A', 
                     "'": '', 
-                    'p':'a', 
-                    "Y":'a', 
-                    '<':'I', 
-                    '$':'sh', 
+                    'p': 'a', 
+                    "Y": 'a', 
+                    '<': 'I', 
+                    '$': 'sh', 
                     '>': 'A', 
-                    '*':'d', 
-                    '~':"", 
-                    '}':"", 
-                    '&':'a',
-                    'Z':'T'
+                    '*': 'd', 
+                    '~': "", 
+                    '}': "", 
+                    '&': 'a',
+                    'Z': 'T'
                     }
         for wrong in respellings:
             try:
@@ -97,9 +104,10 @@ class Preprocess:
         return ''.join(s)
 
     def arabic_translation(self, names_df, ar2bw = CharMapper.builtin_mapper('ar2bw')):
-        names_df['name'] =[ar2bw(text) for text in names_df['name']]
-        names_df['name']=[self.respell(name) for name in  names_df['name']]
-        names_df['name'] = names_df['name'].apply(lambda x: x.lower())
+        for i, row in names_df.iterrows():
+            if re.search('[ء-ي]', row['name']):
+                names_df.at[i, 'name'] = ar2bw(row['name'])
+                names_df.at[i, 'name'] = self.respell(row['name']).lower()
         return names_df
     
     def Encode(self, names_df):
@@ -128,24 +136,27 @@ class Preprocess:
     def preprocess(self, names_df, train=True):
         #Step 1 : Drop duplicates and NaN, fixe genders
         names_df.dropna(subset='name',inplace=True)
-        try:
-            names_df.gender.fillna('/', inplace=True)
-        except:
-            pass
         #Step 2 : cleaning names
         names_df['name'] = names_df.name.apply(lambda x: self.remove_emojis(x))
-        names_df['name']= names_df.name.apply(lambda x: self.text_to_id(x))
+        names_df['name'] = names_df.name.apply(lambda x: self.text_to_id(x))
+        print(names_df)
         names_df['name'] = names_df.name.apply(lambda x: self.clean_text(x))
-        names_df=names_df.dropna(subset='name').reset_index(drop=True)
-        #Step 3 : drop short names
-        indexes=[]
-        for index, row in names_df.iterrows():
-            if len(row['name'])<3:
-                indexes.append(index)
-        names_df=names_df.drop(indexes)
-        names_df=names_df.reset_index(drop=True)
-
-        #Step 1: standardize names
-        names_df=self.arabic_translation(names_df)
-        names_df=self.Encode(names_df)
+        names_df = names_df.dropna(subset='name').reset_index(drop=True)
+        #Step 3: standardize names
+        names_df = self.arabic_translation(names_df)
+        names_df = self.Encode(names_df)
         return names_df
+    
+    def prediction(self):
+        if self.request.method == 'POST':
+            name = self.request.form['name']
+            data = pd.DataFrame(data={'original_name': name.split(','),
+                                      'name': name.split(',')})
+            data = data[data['name'].str.len()<=20].reset_index(drop=True)
+            data = self.preprocess(data)
+            X = np.asarray(data['encoded_name'].values.tolist())
+            X = X.reshape(X.shape[0], X.shape[1]*X.shape[2])
+            data['gender'] = self.clf.predict(X)
+            data[['original_name', 'gender']].to_csv('static/media/data/prediction.csv', index=False)
+            return data
+        

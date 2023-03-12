@@ -1,10 +1,7 @@
 pandas
 re
-matplotlib
 emot
 camel_tools
-sklearn
-wordCloud
 joblib
-unicodedata
 Flask
+re

@@ -45,11 +45,11 @@
 			<tr>
 				{% if row['gender'] == 1 %}
 					<td style="text-align: center;">{{ index+1 }}</td>
-					<td style="text-align: center;">{{ row['name'] }}</td>
+					<td style="text-align: center;">{{ row['original_name'] }}</td>
 					<td style="text-align: center;color: blue;">Man</td>
 				{% elif row['gender'] == 0 %}
 					<td style="text-align: center;">{{ index+1 }}</td>
-					<td style="text-align: center;">{{ row['name'] }}</td>
+					<td style="text-align: center;">{{ row['original_name'] }}</td>
 					<td style="text-align: center;color: violet;">Woman</td>
 				{% endif %}
 			</tr>
