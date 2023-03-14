@@ -1,7 +1,6 @@
 pandas
-re
+regex
 emot
 camel_tools
 joblib
 Flask
-re
