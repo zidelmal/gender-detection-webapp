@@ -139,7 +139,6 @@ class Prediction:
         #Step 2 : cleaning names
         names_df['name'] = names_df.name.apply(lambda x: self.remove_emojis(x))
         names_df['name'] = names_df.name.apply(lambda x: self.text_to_id(x))
-        print(names_df)
         names_df['name'] = names_df.name.apply(lambda x: self.clean_text(x))
         names_df = names_df.dropna(subset='name').reset_index(drop=True)
         #Step 3: standardize names
