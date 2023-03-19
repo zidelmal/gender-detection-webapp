@@ -29,14 +29,16 @@ python -m pip install -r requirements.txt
 
 ## How to run ?
 
+Use the following command to launch the project on your localhost.
+
 ```bash
 python app.py
 ```
-then go to the following url :
+Then enter the following url :
 ```
 http://127.0.0.1:5000/
 ```
 
 # Overview of the webApp
 
-![image](https://user-images.githubusercontent.com/88236219/226205360-0f012b32-cd4d-43da-806b-49c30053e601.png
+https://user-images.githubusercontent.com/88236219/226205360-0f012b32-cd4d-43da-806b-49c30053e601.png
