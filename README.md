@@ -1,4 +1,11 @@
-# gender-detector-webapp
+# gender-predictor-webapp
+
+# Welcome to Gender Predictor WebApp
+
+A Flask based project to predict the gender of a user, according to his FirstName.
+The objectif from it is to correct the data related to gender, that encounter every data-driver company in the process of data analysis (profilling, churn prediction, defining persona, etc) or their marketing process.
+
+# Overview of the webApp
 
 ![image](https://user-images.githubusercontent.com/88236219/226205360-0f012b32-cd4d-43da-806b-49c30053e601.png)
 
