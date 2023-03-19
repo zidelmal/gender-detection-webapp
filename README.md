@@ -7,10 +7,7 @@ The objectif from it is to correct the data related to gender, that encounter ev
 
 ## About the project's model
 
-To get more information about the model and it developpement visit this git repository : 
-```
-https://github.com/zidelmal/gender-detector-model
-```
+To get more information about the model and it developpement visit this git repository : https://github.com/zidelmal/gender-detector-model
 
 ## Installation
 
