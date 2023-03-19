@@ -13,11 +13,11 @@ To get more information about the model and it developpement visit this git repo
 
 Use the following command to clone the project on your local machine
 ```bash
-https://github.com/zidelmal/gender-detector-webapp.git
+https://github.com/zidelmal/gender-predictor-webapp.git
 ```
 Browse to the main folder using
 ```bash
-cd gender-prediction-webapp
+cd gender-predictor-webapp
 ```
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install required packages.
