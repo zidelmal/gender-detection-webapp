@@ -11,7 +11,7 @@ from camel_tools.utils.charmap import CharMapper
 class Prediction:
 
     def __init__(self, request):
-        self.clf = joblib.load('ETC.pkl')
+        self.clf = joblib.load('RFC.pkl')
         self.request = request
 
     def remove_emojis(self, data):
