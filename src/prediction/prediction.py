@@ -3,8 +3,6 @@ import joblib
 import unicodedata
 import numpy as np
 import pandas as pd
-from emot.emo_unicode import UNICODE_EMOJI
-from emot.emo_unicode import EMOTICONS_EMO
 from camel_tools.utils.charmap import CharMapper
 
 

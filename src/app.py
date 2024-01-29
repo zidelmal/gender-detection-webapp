@@ -1,12 +1,10 @@
 # Import modules
-import joblib
-import numpy as np
-import pandas as pd
 from prediction.prediction import Prediction
 from flask import (Flask, 
-                   render_template, 
                    request,
-                   send_file)
+                   send_file,
+				   render_template
+)
 
 # Init some functions
 
