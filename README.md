@@ -38,4 +38,5 @@ http://127.0.0.1:5000/
 
 ## WebApp Overview
 
-![image](https://user-images.githubusercontent.com/88236219/226205360-0f012b32-cd4d-43da-806b-49c30053e601.png)
+![image](![Capture d'écran 2024-01-29 111601](https://github.com/zidelmal/gender-detection-webapp/assets/88236219/50e26c76-05f7-4d82-97b2-76c94d62efa6)
+)
